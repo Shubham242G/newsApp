@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 export default class Nvbar extends Component {
+    constructor(props){
+        super(props);
+    this.state = {
+        lang:'en',
+      }
+    }
+
     render() {
         return (
             <>
@@ -12,20 +19,19 @@ export default class Nvbar extends Component {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/">Home</Link>
+                                <Link className="nav-link" to='/science'>Science</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to='/business'>Business</Link>
+                                <Link className="nav-link" to='/world'>World</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to='/sports'>Sports</Link>
+                                <Link className="nav-link" to='/nation'>Nation</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to='/health'>Health</Link>
-                            </li>
-                            <li className="nav-item"><Link className="nav-link" to='/entertainment'>Entertainment</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to='/science'>Science</Link></li>
+                            <li className="nav-item"><Link className="nav-link" to='/business'>Business</Link></li>
                             <li className="nav-item"><Link className="nav-link" to='/technology'>Technology</Link></li>
+                            <li className="nav-item"><Link className="nav-link" to='/entertainment'>Entertainment</Link></li>
+                            <li className="nav-item"><Link className="nav-link" to='/sports'>Sports</Link></li>
+                            <li className="nav-item"><Link className="nav-link" to='/health'>Health</Link></li>
                         </ul>
                     </div>
                 </nav>

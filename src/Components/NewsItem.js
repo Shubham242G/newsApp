@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 export default class NewsItem extends Component{
     render(){
-        let {source,title, description, imageUrl,time,author, newsUrl} = this.props;
+        let {source,title, description, imageUrl,time, newsUrl} = this.props;
         let t = new Date(time).toUTCString()
         return(
             <div className="container" style={{width: '77%'}}>
@@ -13,7 +13,6 @@ export default class NewsItem extends Component{
                                 <h5 className="card-title">{title}</h5>
                                 <p className="card-text">{description && description.slice(0,72)}</p>
                                 <small className="text-muted">{t}</small>
-                                <footer className="blockquote-footer">{author ? author : "unknown"}</footer>
                                 <a href={newsUrl} className="btn btn-sm btn-primary">Read more</a>
                             </div>
                         </div>

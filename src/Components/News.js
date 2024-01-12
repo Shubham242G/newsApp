@@ -11,24 +11,21 @@ export default class News extends Component{
         this.state={
             articles:[],
             status:true,
-            page:1,
             totalResults:0,
         }
         document.title = `${this.capitalizeFirstLetter(this.props.category)}- Kal Tak`
     }
 
     static defultProps = {
-        pageSize:7,
-        category:'general',
-        country:'in',
-        page:1,
-                
+        lang:'en',
+        q:'',
+        category:'general'        
     }
 
     static propTypes = {
-        pageSize : PropTypes.number,
-        category : PropTypes.string,
-        country : PropTypes.string,
+        lang : PropTypes.string,
+        q : PropTypes.string,
+        category: PropTypes.string
     }
     
     async componentDidMount(){
@@ -37,45 +34,37 @@ export default class News extends Component{
 
     async updateNews (){
         this.props.setProgress(10);
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        let url = `https://gnews.io/api/v4/top-headlines?apikey=${this.props.apiKey}&category=${this.props.category}&lang=${this.props.lang}`
         this.setState({status:true});
         let data = await fetch(url);
         this.props.setProgress(30);
         let parsedData = await data.json();
         this.props.setProgress(70);
-        this.setState({articles: parsedData.articles, totalResults: parsedData.totalResults,status:false})
+        this.setState({articles: parsedData.articles, totalResults: parsedData.totalArticles,status:false})
         this.props.setProgress(100);
     }
 
+
+
     fetchMoreData = async() => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
-        this.setState({page: this.state.page + 1})
+        let url = `https://gnews.io/api/v4/top-headlines?apikey=${this.props.apiKey}&category=${this.props.category}&lang=${this.props.lang}`
         let data = await fetch(url);
         let parsedData = await data.json();
-        this.setState({articles: this.state.articles.concat(parsedData.articles), totalResults: parsedData.totalResults})
+        console.log(parsedData);
+        this.setState({articles: this.state.articles.concat(parsedData.articles), totalResults: parsedData.totalArticles})
       };
 
     capitalizeFirstLetter(str){
        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    previousPage = async()=>{
-        this.setState({page: this.state.page -1})
-        this.updateNews();
-        
-    }
-
-    nextPage = async()=>{
-        this.setState({page: this.state.page +1})
-        this.updateNews();
-        
-    } 
+ 
 
     render(){
         return(
             <>
                 <h2 style={{marginTop:'90px'}}> This is Kal Tak. Aaj Tak se zyada tez</h2>
-                <h2>{this.capitalizeFirstLetter(this.props.category)} top headlines</h2>
+                <h2>{this.capitalizeFirstLetter(this.props.category)} News</h2>
                 {this.state.status && <Spinner/>}
                     <InfiniteScroll
                         dataLength={this.state.articles.length}
@@ -87,7 +76,7 @@ export default class News extends Component{
                                 <div className="row my-4">
                                     {this.state.articles.map((element)=>{
                                     return <div className="col-md-4 col-sm-6 my-4" key={element.url}>
-                                                <NewsItem source = {element.source.name} time={element.publishedAt} author={element.author} title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url}/>
+                                                <NewsItem source = {element.source.name} time={element.publishedAt} title={element.title} description={element.description} imageUrl={element.image} newsUrl={element.source.url}/>
                                             </div>
                                     })}
                                 </div>
