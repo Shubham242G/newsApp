@@ -1,11 +1,11 @@
-import React, {Component} from "react";
+import React from "react";
 
-export default class NewsItem extends Component{
-    render(){
-        let {source,title, description, imageUrl,time, newsUrl} = this.props;
+function NewsItem({source,title, description, imageUrl,time, newsUrl}){
+    
         let t = new Date(time).toUTCString()
+
         return(
-            <div className="container" style={{width: '77%'}}>
+            <div className="container" style={{width: '77%',marginLeft:'10px'}}>
                         <span className="badge badge-pill badge-primary">{source}</span>
                         <div className="card" style={{width: '18rem'}}>
                             <img src={imageUrl ? imageUrl : 'https://deadline.com/wp-content/uploads/2023/09/GettyImages-164230595-e1694969128971.jpg?w=655'} className="card-img-top" alt="..."/>
@@ -18,5 +18,6 @@ export default class NewsItem extends Component{
                         </div>
             </div>
         )
-    }
+    
 }
+export default NewsItem

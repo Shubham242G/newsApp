@@ -4,6 +4,7 @@ import News from './Components/News';
 import { Route,BrowserRouter,Routes } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar'
 import { useState } from 'react';
+import Error from './Components/Error';
 
 function App() {
   const [progress,setProgress] = useState(0)
@@ -28,6 +29,7 @@ function App() {
             <Route path='/sports' element={<News apiKey={apiKey} setProgress = {setProgress} progress={progress} category={'sports'} key="sports" lang={'en'} />} />
             <Route path='/science' element={<News apiKey={apiKey} setProgress = {setProgress} progress={progress} category={'science'} key="science" lang={'en'}/>}/>
             <Route path='/health' element={<News apiKey={apiKey} setProgress = {setProgress} progress={progress} category={'health'} key="health" lang={'en'}/>}/>
+            <Route path='*' element={<Error/>}/>
         </Routes>
       </div>
     </BrowserRouter>
